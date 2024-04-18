@@ -1,11 +1,13 @@
-import React from 'react'
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsslice';
 import css from './ContactForm.module.css';
 import { Formik, Form, Field,ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 
-function ContactForm({ onAddContact }) {
-  const MAX_CHAR_NAME_VALIDATION = 50;
+function ContactForm() {
+  const dispatch=useDispatch();
+   const MAX_CHAR_NAME_VALIDATION = 50;
   const MIN_CHAR_NAME_VALIDATION = 3;
   const MIN_DIGITS_PHONE_VALIDATION = 6;
   const contactFormSchema = Yup.object({
@@ -16,7 +18,7 @@ function ContactForm({ onAddContact }) {
     name: "",
     number: "",
   };
-  const handleSubmit = (values, actions) => { onAddContact(values); actions.resetForm(); }
+  const handleSubmit = (values, actions) => { dispatch(addContact(values));  actions.resetForm(); }
   return (
      <Formik initialValues={FORM_INITIAL_VALUES} onSubmit={handleSubmit} validationSchema={contactFormSchema} >
       <Form className={css.formContainer}>
